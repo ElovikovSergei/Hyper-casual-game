@@ -587,7 +587,7 @@ PlayerSettings:
     m_StaticBatching: 0
     m_DynamicBatching: 0
   - m_BuildTarget: Android
-    m_StaticBatching: 0
+    m_StaticBatching: 1
     m_DynamicBatching: 0
   - m_BuildTarget: WebGL
     m_StaticBatching: 0
@@ -946,7 +946,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
-    Standalone: 0
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel: {}
@@ -1036,7 +1036,7 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: 291f218e-6fcc-4087-8cf0-a5206b0cd918
   framebufferDepthMemorylessMode: 0
