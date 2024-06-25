@@ -2,12 +2,13 @@ using UnityEngine.InputSystem.OnScreen;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using System;
+using Core;
 
 namespace UI.Joystick
 {
-    public sealed class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+    public sealed class Joystick : MonoBehaviourSingleton<Joystick>, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        public event Action<Vector2> OnInputChangedEvent;
+        public event Action<Vector3> OnInputChangedEvent;
 
         [SerializeField] private JoystickType _type;
 
@@ -28,6 +29,13 @@ namespace UI.Joystick
         [SerializeField] private OnScreenStick _stickController;
 
         private Vector2 _initialPosition;
+
+        public Vector3 GetHandleDirection()
+        {
+            var normalizedDirection = _handleRect.anchoredPosition / _stickController.movementRange;
+
+            return new Vector3(normalizedDirection.x, 0f, normalizedDirection.y);
+        }
 
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -56,18 +64,20 @@ namespace UI.Joystick
             }
 
             var constructedEventData = new PointerEventData(EventSystem.current);
+
             constructedEventData.position = Vector2.zero;
 
             _stickController.OnPointerUp(constructedEventData);
-            OnInputChangedEvent?.Invoke(_handleRect.anchoredPosition / _stickController.movementRange);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
+            var normalizedDirection = _handleRect.anchoredPosition / _stickController.movementRange;
+
             if (_type == JoystickType.Floating)
                 _stickController.OnDrag(eventData);
 
-            OnInputChangedEvent?.Invoke(_handleRect.anchoredPosition / _stickController.movementRange);
+            OnInputChangedEvent?.Invoke(new Vector3(normalizedDirection.x, 0f, normalizedDirection.y));
         }
 
         private Vector2 GetAnchoredPosition(Vector2 screenPosition)
@@ -86,6 +96,7 @@ namespace UI.Joystick
 
         private void Awake()
         {
+            Instance = this;
             _canvas = GetComponentInParent<Canvas>();
 
             var center = new Vector2(0.5f, 0.5f);

@@ -3,18 +3,12 @@ using UnityEngine;
 
 namespace Core.Entities
 {
-    public abstract class PersonController : MonoBehaviour, IMovable, IRotatable
+    public abstract class PersonController : MonoBehaviour, IMovable
     {
+        protected NavMeshAgent Agent => _agent;
+
         [SerializeField] private NavMeshAgent _agent;
 
-        public void Move(Vector3 direction)
-        {
-
-        }
-
-        public void Rotate(Vector3 direction)
-        {
-
-        }
+        public virtual void Move(Vector3 direction) { }
     }
 }
