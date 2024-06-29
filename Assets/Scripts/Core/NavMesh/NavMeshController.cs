@@ -44,7 +44,6 @@ namespace Core.Controllers
         private void Awake()
         {
             Instance = this;
-            Initialize();
         }
     }
 }
