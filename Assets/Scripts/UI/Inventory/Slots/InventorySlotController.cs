@@ -7,11 +7,14 @@ namespace UI.Inventory
     public sealed class InventorySlotController : MonoBehaviour
     {
         [SerializeField] private InventorySlotView _view;
+        private IInventorySlot _slot;
 
         public void Setup(IInventorySlot slot)
         {
-            slot.OnItemTypeChangedEvent += OnItemTypeChanged;
-            slot.OnItemAmountChangedEvent += OnItemAmountChanged;
+            _slot = slot;
+
+            _slot.OnItemTypeChangedEvent += OnItemTypeChanged;
+            _slot.OnItemAmountChangedEvent += OnItemAmountChanged;
 
             //_view.SetIcon();
             //_view.SetAmount(slot.Amount.ToString());
@@ -24,7 +27,16 @@ namespace UI.Inventory
 
         private void OnItemTypeChanged(ItemType itemType)
         {
+            //_view.SetIcon();
             // TO DO: getting icon by type
+        }
+
+        private void OnDisable()
+        {
+            _slot.OnItemTypeChangedEvent -= OnItemTypeChanged;
+            _slot.OnItemAmountChangedEvent -= OnItemAmountChanged;
+
+            _slot = null;
         }
     }
 }
