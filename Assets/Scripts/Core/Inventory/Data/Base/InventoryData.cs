@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 
 namespace Core.Inventory
@@ -6,5 +7,6 @@ namespace Core.Inventory
     public abstract class InventoryData
     {
         public string OwnerId;
+        public List<InventorySlotData> SlotsData;
     }
 }
