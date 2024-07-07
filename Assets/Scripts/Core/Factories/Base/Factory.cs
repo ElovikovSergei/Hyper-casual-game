@@ -7,7 +7,12 @@ namespace Core.Factories
     {
         protected ObjectPool<T> pool;
 
-        public abstract void Initialize();
+        public Factory()
+        {
+            Initialize();
+        }
+
         public abstract T GetInstance(D data);
+        protected abstract void Initialize();
     }
 }
