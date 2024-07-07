@@ -42,10 +42,10 @@ namespace Core.Sections
             if (_isAnimationPlaying || _collectedItemsAmount == 0)
                 return;
 
-            if (!other.gameObject.TryGetComponent<InventoryController>(out var controller))
+            if (!other.gameObject.TryGetComponent<InventoryController>(out var inventory))
                 return;
 
-            GetItems(controller);
+            GetItems(inventory);
         }
 
         protected void Initialize(ItemType itemType)
@@ -84,7 +84,7 @@ namespace Core.Sections
             yield break;
         }
 
-        private void GetItems(InventoryController inventoryController)
+        private void GetItems(InventoryController inventory)
         {
             var collectedItemsAmount = _collectedItemsAmount;
             var activeItems = _activeItems;
@@ -95,7 +95,7 @@ namespace Core.Sections
                 var time = Random.Range(0.4f, 0.6f);
 
                 transform.DOScale(0f, time).SetEasing(Ease.Type.SineIn);
-                transform.DOBezierFollow(inventoryController.transform, Random.Range(5f, 10f), Random.Range(-1f, 1f), Random.Range(0.4f, 0.6f))
+                transform.DOBezierFollow(inventory.transform, Random.Range(5f, 10f), Random.Range(-1f, 1f), Random.Range(0.4f, 0.6f))
                     .SetEasing(Ease.Type.SineIn)
                     .OnComplete(delegate
                     {
