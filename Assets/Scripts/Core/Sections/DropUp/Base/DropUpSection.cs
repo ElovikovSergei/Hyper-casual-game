@@ -24,22 +24,22 @@ namespace Core.Sections
         {
             base.OnTriggerEnter(other);
 
-            if (!other.TryGetComponent<InventoryController>(out var inventoryController))
+            if (!other.TryGetComponent<InventoryController>(out var inventory))
                 return;
 
-            if (!inventoryController.Inventory.HasItems(ItemType))
+            if (!inventory.Inventory.HasItems(ItemType))
                 return;
 
-            StartCoroutine(DropUpRoutine(inventoryController));
+            StartCoroutine(DropUpRoutine(inventory));
         }
 
-        private IEnumerator DropUpRoutine(InventoryController inventoryController)
+        private IEnumerator DropUpRoutine(InventoryController inventory)
         {
             var dropItemsAmount = 0;
 
-            while (inventoryController.Inventory.HasItems(ItemType))
+            while (inventory.Inventory.HasItems(ItemType))
             {
-                var removingResult = inventoryController.Inventory.RemoveItems(ItemType, 1);
+                var removingResult = inventory.Inventory.RemoveItems(ItemType, 1);
 
                 if (!removingResult.IsSuccess)
                     continue;

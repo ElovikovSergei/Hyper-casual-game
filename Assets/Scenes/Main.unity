@@ -474,21 +474,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 189714740142746295, guid: 538612ebd3ef9a24492a3873d0f13b3b, type: 3}
-      propertyPath: m_AutoRepath
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 189714740142746295, guid: 538612ebd3ef9a24492a3873d0f13b3b, type: 3}
-      propertyPath: m_WalkableMask
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 958792785030988318, guid: 538612ebd3ef9a24492a3873d0f13b3b, type: 3}
       propertyPath: m_Name
       value: Character
-      objectReference: {fileID: 0}
-    - target: {fileID: 5488052097867116332, guid: 538612ebd3ef9a24492a3873d0f13b3b, type: 3}
-      propertyPath: m_Constraints
-      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 7935134909599773095, guid: 538612ebd3ef9a24492a3873d0f13b3b, type: 3}
       propertyPath: m_LocalPosition.x
