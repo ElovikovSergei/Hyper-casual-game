@@ -15,11 +15,6 @@ namespace Core.Controllers
         [SerializeField] private NavMeshSurface _surface;
         private TweenCase _calculatingTweenCase;
 
-        public void Initialize()
-        {
-            CalculateSurface();
-        }
-
         public void CalculateSurface(Action callback = null)
         {
             if (IsNavMeshRecalculating)
@@ -44,6 +39,7 @@ namespace Core.Controllers
         private void Awake()
         {
             Instance = this;
+            CalculateSurface();
         }
     }
 }
