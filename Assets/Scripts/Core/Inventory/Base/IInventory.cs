@@ -11,7 +11,7 @@ namespace Core.Inventory
 
         public RemoveItemsResult RemoveItems(ItemType itemType, int amount);
         public AddItemsResult AddItems(ItemType itemType, int amount);
-        public bool HasItems(ItemType itemType, int amount);
+        public bool HasItems(ItemType itemType, int amount = 1);
         public int GetItemsAmount(ItemType itemType);
     }
 }
