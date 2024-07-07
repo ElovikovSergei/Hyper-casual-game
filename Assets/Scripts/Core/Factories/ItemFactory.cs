@@ -7,12 +7,12 @@ namespace Core.Factories
     {
         public override ItemController GetInstance(ItemType itemType)
         {
-            throw new System.Exception();
+            throw new System.Exception(); // TO DO
         }
         
         protected override void Initialize()
         {
-            throw new System.NotImplementedException();
+            throw new System.NotImplementedException(); // TO DO
         }
     }
 }
