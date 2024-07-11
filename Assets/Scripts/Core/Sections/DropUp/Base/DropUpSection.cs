@@ -44,15 +44,16 @@ namespace Core.Sections
                 if (!removingResult.IsSuccess)
                     continue;
 
-                var transform = this.transform; // TO DO: get object from pool
+                var itemController = inventory.RemoveItemController(ItemType, 1);
                 var time = Random.Range(0.4f, 0.6f);
 
-                transform.DOScale(0f, time).SetEasing(Ease.Type.SineIn);
-                transform.DOBezierFollow(this.transform, Random.Range(5f, 10f), Random.Range(-1f, 1f), Random.Range(0.4f, 0.6f))
+                itemController.transform.DOScale(0f, time).SetEasing(Ease.Type.SineIn);
+                itemController.transform.DOBezierFollow(transform, Random.Range(5f, 10f), Random.Range(-1f, 1f), time)
                     .SetEasing(Ease.Type.SineIn)
                     .OnComplete(delegate
                     {
-                        transform.localScale = Vector3.one;
+                        itemController.gameObject.SetActive(false);
+                        itemController.transform.ResetLocal();
                     });
 
                 ++dropItemsAmount;

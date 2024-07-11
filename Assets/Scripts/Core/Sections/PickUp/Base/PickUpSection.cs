@@ -10,7 +10,7 @@ namespace Core.Sections
 {
     public abstract class PickUpSection : Section
     {
-        public ItemType Type { get; private set; }
+        public ItemType ItemType { get; private set; }
         public Guid Id { get; private set; }
 
         [SerializeField] private Transform[] _stackElements;
@@ -32,7 +32,7 @@ namespace Core.Sections
             _isAnimationPlaying = true;
             _collectedItemsAmount += amount;
 
-            StartCoroutine(PickUpRoutine(amount));
+            StartCoroutine(SpawnItemsRoutine(amount));
         }
 
         protected override void OnTriggerEnter(Collider other)
@@ -51,30 +51,30 @@ namespace Core.Sections
         protected void Initialize(ItemType itemType)
         {
             Id = Guid.NewGuid();
-            Type = itemType;
+            ItemType = itemType;
             _spawnDelay = new WaitForSeconds(0.025f);
         }
 
-        private IEnumerator PickUpRoutine(int amount)
+        private IEnumerator SpawnItemsRoutine(int amount)
         {
             for (int i = 0; i < amount; ++i)
             {
                 if (_activeItems.Count >= _stackElements.Length)
                     break;
 
-                var tempItemObject = gameObject; // TO DO: get object from pool
+                var item = FactoriesController.Instance.ItemFactory.GetInstance(ItemType);
 
-                tempItemObject.transform.ResetLocal();
+                item.transform.ResetLocal();
 
-                tempItemObject.transform.position = _stackElements[_collectedItemsAmount].position;
-                tempItemObject.transform.rotation = _stackElements[_collectedItemsAmount].rotation;
-                tempItemObject.transform.localScale = Vector3.zero;
+                item.transform.position = _stackElements[_collectedItemsAmount].position;
+                item.transform.rotation = _stackElements[_collectedItemsAmount].rotation;
+                item.transform.localScale = Vector3.zero;
 
-                tempItemObject.SetActive(true);
-                tempItemObject.transform.DOScale(_defaultItemSize, 0.1f).SetEasing(Ease.Type.BackOut);
+                item.gameObject.SetActive(true);
+                item.transform.DOScale(_defaultItemSize, 0.1f).SetEasing(Ease.Type.BackOut);
 
                 ++_collectedItemsAmount;
-                _activeItems.Add(tempItemObject.transform);
+                _activeItems.Add(item.transform);
 
                 yield return _spawnDelay;
             }
@@ -95,11 +95,14 @@ namespace Core.Sections
                 var time = Random.Range(0.4f, 0.6f);
 
                 transform.DOScale(0f, time).SetEasing(Ease.Type.SineIn);
-                transform.DOBezierFollow(inventory.transform, Random.Range(5f, 10f), Random.Range(-1f, 1f), Random.Range(0.4f, 0.6f))
+                transform.DOBezierFollow(inventory.ItemsInstanceParent, Random.Range(5f, 10f), Random.Range(-1f, 1f), time)
                     .SetEasing(Ease.Type.SineIn)
                     .OnComplete(delegate
                     {
                         transform.gameObject.SetActive(false);
+                        transform.ResetLocal();
+
+                        inventory.Inventory.AddItems(ItemType, 1);
                     });
             }
 
